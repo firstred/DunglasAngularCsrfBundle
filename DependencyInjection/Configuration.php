@@ -26,8 +26,13 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('dunglas_angular_csrf');
+        if (\method_exists('TreeBuilder', 'getRootNode')) {
+            $treeBuilder = new TreeBuilder('dunglas_angular_csrf');
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            $treeBuilder = new TreeBuilder();
+            $rootNode = $treeBuilder->root('dunglas_angular_csrf');
+        }
         $rootNode
             ->children()
                 ->arrayNode('token')
