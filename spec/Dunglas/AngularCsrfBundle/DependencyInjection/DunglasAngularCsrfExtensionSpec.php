@@ -66,6 +66,13 @@ class DunglasAngularCsrfExtensionSpec extends ObjectBehavior
         }
 
         $container->getParameterBag()->willReturn($parameterBag)->shouldBeCalled();
+        if (method_exists('Double\Symfony\Component\DependencyInjection\ContainerBuilder\P11', 'removeBindings')) {
+            $container->removeBindings('dunglas_angular_csrf.route_matcher')->shouldBeCalled();
+            $container->removeBindings('dunglas_angular_csrf.token_manager')->shouldBeCalled();
+            $container->removeBindings('dunglas_angular_csrf.validation_listener')->shouldBeCalled();
+            $container->removeBindings('dunglas_angular_csrf.cookie_listener')->shouldBeCalled();
+            $container->removeBindings('dunglas_angular_csrf.form.extension.disable_csrf')->shouldBeCalled();
+        }
         $container->hasExtension('http://symfony.com/schema/dic/services')->willReturn(false)->shouldBeCalled();
         $container->setParameter('dunglas_angular_csrf.token.id', $configs['dunglas_angular_csrf']['token']['id'])->shouldBeCalled();
         $container->setParameter('dunglas_angular_csrf.cookie.name', $configs['dunglas_angular_csrf']['cookie']['name'])->shouldBeCalled();
